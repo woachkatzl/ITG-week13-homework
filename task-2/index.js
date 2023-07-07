@@ -1,14 +1,12 @@
+// DOM ELEMENTS
 const birthdayInput = document.querySelector("#birthday");
 const button = document.querySelector("button");
+const resultMessage = document.querySelector("#result");
 
-button.addEventListener("click", daysToBirthday);
-
-function daysToBirthday() {
-    // Берём данные о дате дня рождения
-    const birthdayTimeStamp = Date.parse(birthdayInput.value);
-
+// NUMBER OF DAYS TILL BIRTHDAY
+const daysToBirthday = () => {
     // Создаём текущую дату и дату рождения в текущем году
-    const birthdayDate = new Date(birthdayTimeStamp);
+    const birthdayDate = new Date(birthdayInput.value);
     const currentDate = new Date();
 
     //Извлекаем UTC день из даты рождения и из текущей
@@ -18,6 +16,23 @@ function daysToBirthday() {
     // Считаем разницу в днях и определяем количство дней до следующего дня рождения
     const diffInDays = birthdayDay - currentDay;
     const daysToBirthday = diffInDays < 0 ? diffInDays + 365 : diffInDays;
-    console.log(daysToBirthday);
+    return daysToBirthday;
+};
+
+// EVENT LISTENERS
+button.addEventListener("click", showDaysToBirthday);
+
+// FUNCTION TO SHOW DAYS TO BIRTHDAY
+function showDaysToBirthday() {
+    const errorMessage = "Пожалуйста, введите дату вашего рождения в текущем году";
+    const successMessage = `До вашего дня рождения осталось ждать ${daysToBirthday()} дней!`;
+
+    if (birthdayInput.value) {
+        resultMessage.textContent = successMessage;
+        resultMessage.classList.add("alert", "alert-success");
+    } else {
+        resultMessage.textContent = errorMessage;
+        resultMessage.classList.add("alert", "alert-danger");
+    }
 }
 
