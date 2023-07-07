@@ -27,12 +27,18 @@ function showDaysToBirthday() {
     const errorMessage = "Пожалуйста, введите дату вашего рождения в текущем году";
     const successMessage = `До вашего дня рождения осталось ждать ${daysToBirthday()} дней!`;
 
+    resultMessage.classList.add("alert");
+    // Проверяем пустое поле ввода даты
     if (birthdayInput.value) {
         resultMessage.textContent = successMessage;
-        resultMessage.classList.add("alert", "alert-success");
+        resultMessage.classList.add("alert-success");
+        // Убираем стиль сообщения об ошибке, если он был вызван раньше
+        if (resultMessage.classList.contains("alert-danger")) {
+            resultMessage.classList.remove("alert-danger");
+        }
     } else {
         resultMessage.textContent = errorMessage;
-        resultMessage.classList.add("alert", "alert-danger");
+        resultMessage.classList.add("alert-danger");
     }
 }
 
