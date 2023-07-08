@@ -36,7 +36,9 @@ button.addEventListener("click", showDaysToBirthday);
 // FUNCTION TO SHOW DAYS TO BIRTHDAY
 function showDaysToBirthday() {
     const errorMessage = "Пожалуйста, введите дату вашего рождения в текущем году";
-    const successMessage = `До вашего дня рождения осталось ждать ${daysToBirthday()} ${dayWord(daysToBirthday())}!`;
+    const successMessage = daysToBirthday() !== 0
+        ? `До вашего дня рождения осталось ждать ${daysToBirthday()} ${dayWord(daysToBirthday())}!`
+        : "Ваш день рождения сегодня!!!";
 
     resultMessage.classList.add("alert");
     // Проверяем пустое поле ввода даты
