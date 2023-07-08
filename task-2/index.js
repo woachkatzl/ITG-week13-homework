@@ -5,19 +5,30 @@ const resultMessage = document.querySelector("#result");
 
 // NUMBER OF DAYS TILL BIRTHDAY
 const daysToBirthday = () => {
-    // Создаём текущую дату и дату рождения в текущем году
-    const birthdayDate = new Date(birthdayInput.value);
-    const currentDate = new Date();
+    // Берём данные о дате дня рождения
+    const birthdayTimeStamp = Date.parse(birthdayInput.value);
 
-    //Извлекаем UTC день из даты рождения и из текущей
-    const birthdayDay = birthdayDate.getUTCDate();
-    const currentDay = currentDate.getUTCDate();
+    // Находим разницу от текущего момента до дня рождения
+    const diffInMilliseconds = birthdayTimeStamp - Date.now();
+    const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24)) + 1;
 
-    // Считаем разницу в днях и определяем количство дней до следующего дня рождения
-    const diffInDays = birthdayDay - currentDay;
+    // Определяем количство дней до следующего дня рождения
     const daysToBirthday = diffInDays < 0 ? diffInDays + 365 : diffInDays;
     return daysToBirthday;
 };
+
+// СКЛОНЕНИЕ СЛОВА "ДЕНЬ"
+const dayWord = (number) => {
+    if (number % 100 === 11 || number % 100 === 12 || number % 100 === 13 || number % 100 === 14) {
+        return "дней";
+    } else if (number % 10 === 1) {
+        return "день";
+    } else if (number % 10 === 2 || number % 10 === 3 || number % 10 === 4) {
+        return "дня"
+    } else {
+        return "дней";
+    }
+}
 
 // EVENT LISTENERS
 button.addEventListener("click", showDaysToBirthday);
@@ -25,7 +36,7 @@ button.addEventListener("click", showDaysToBirthday);
 // FUNCTION TO SHOW DAYS TO BIRTHDAY
 function showDaysToBirthday() {
     const errorMessage = "Пожалуйста, введите дату вашего рождения в текущем году";
-    const successMessage = `До вашего дня рождения осталось ждать ${daysToBirthday()} дней!`;
+    const successMessage = `До вашего дня рождения осталось ждать ${daysToBirthday()} ${dayWord(daysToBirthday())}!`;
 
     resultMessage.classList.add("alert");
     // Проверяем пустое поле ввода даты
